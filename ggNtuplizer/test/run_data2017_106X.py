@@ -14,12 +14,12 @@ process.GlobalTag = GlobalTag(process.GlobalTag, '106X_dataRun2_v35')
 
 #process.Tracer = cms.Service("Tracer")
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(50000) )
 process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 
 process.source = cms.Source("PoolSource",
                             fileNames = cms.untracked.vstring(
-        'root://cmsxrootd.fnal.gov//store/data/Run2016B/DoubleEG/MINIAOD/ver2_HIPM_UL2016_MiniAODv2-v1/130000/359FB33A-068B-4341-8448-7F6D4FC72B19.root'
+        '/store/data/Run2017C/SingleElectron/MINIAOD/UL2017_MiniAODv2-v1/270000/E4D80EC1-69A9-C24F-82C9-7BF11CD6F2D5.root'
         )
                             )
 
@@ -49,10 +49,10 @@ runOnData( process,  names=['Photons', 'Electrons','Muons','Taus','Jets'], outpu
 #runOnData( process, outputModules = [] )
 #removeMCMatching(process, names=['All'], outputModules=[])
 
-process.TFileService = cms.Service("TFileService", fileName = cms.string('ggtree_data.root'))
+process.TFileService = cms.Service("TFileService", fileName = cms.string('ggtree_data_2017C.root'))
 
 process.load("ggAnalysis.ggNtuplizer.ggNtuplizer_miniAOD_cfi")
-process.ggNtuplizer.year=cms.int32(2016)
+process.ggNtuplizer.year=cms.int32(2017)
 process.ggNtuplizer.doGenParticles=cms.bool(False)
 process.ggNtuplizer.dumpPFPhotons=cms.bool(True)
 process.ggNtuplizer.dumpHFElectrons=cms.bool(False)
@@ -62,7 +62,7 @@ process.ggNtuplizer.dumpSoftDrop= cms.bool(True)
 process.ggNtuplizer.dumpTaus=cms.bool(False)
 #process.ggNtuplizer.ak4JetSrc=cms.InputTag("slimmedJetsJEC")
 #process.ggNtuplizer.pfMETLabel=cms.InputTag("slimmedMETsModifiedMET")
-#process.ggNtuplizer.patTriggerResults=cms.InputTag("TriggerResults", "", "DQM")
+process.ggNtuplizer.patTriggerResults=cms.InputTag("TriggerResults", "", "HLT")
 process.ggNtuplizer.addFilterInfoMINIAOD=cms.bool(True)
 process.load("ggAnalysis.ggNtuplizer.ggMETFilters_cff")
 

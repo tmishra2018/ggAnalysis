@@ -76,13 +76,13 @@ void ggNtuplizer::initTriggerFilters(const edm::Event &e) {
     //HLT_Ele27_WPLoose_Gsf_v
     eleSingleFilters["hltEG27L1IsoEG22erORIsoEG24erORIsoEG24ORIsoEG26OREG40EtFilter"] = 9;
     //HLT_Ele27_eta2p1_WPLoose_Gsf_v2, HLT_Ele27_eta2p1_WPLoose_Gsf_LooseIsoPFTau*                             
-    eleSingleFilters["hltEle27erWPLooseGsfTrackIsoFilter"] = 10;
+    eleSingleFilters["hltEle27erWPLooseGsfTrackIsoFilter"] = 10;                           // 2016 for Analysis
     //HLT_Ele27_eta2p1_WPTight_Gsf                                                                             
     eleSingleFilters["hltEle27erWPTightGsfTrackIsoFilter"] = 11;
     //HLT_Ele27_WPTight_Gsf                                                                                    
     eleSingleFilters["hltEle27WPTightGsfTrackIsoFilter"] = 12;
-    //HLT_Ele32_eta2p1_WPTight_Gsf                                                                             
-    eleSingleFilters["hltEle32WPTightGsfTrackIsoFilter"] = 13;
+    //HLT_Ele32_WPTight_Gsf                                                                             
+    eleSingleFilters["hltEle32WPTightGsfTrackIsoFilter"] = 13; // HLT_Ele32_WPTight_Gsf
     //HLT_Ele35_WPLoose_Gsf                                                                                    
     eleSingleFilters["hltEle35WPLooseGsfTrackIsoFilter"] = 14;
     //HLT_Ele45_WPLoose_Gsf                                                                                    
@@ -98,8 +98,8 @@ void ggNtuplizer::initTriggerFilters(const edm::Event &e) {
     //HLT_Ele24_eta2p1_WPLoose_Gsf_LooseIsoPFTau20_v1                                                          
     eleSingleFilters["hltOverlapFilterIsoEle24WPLooseGsfLooseIsoPFTau20"] = 20;
     //HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90                                                   
-    eleSingleFilters["hltEG18Iso60CaloId15b35eHE12R9Id50b80eTrackIsoUnseededLastFilter"] = 21;
-    eleSingleFilters["hltEG18R9Id85b90eHE12R9Id50b80eR9UnseededLastFilter"] = 22; 
+    eleSingleFilters["hltEG18Iso60CaloId15b35eHE12R9Id50b80eTrackIsoUnseededLastFilter"] = 21;  // 2016 for Analysis
+    eleSingleFilters["hltEG18R9Id85b90eHE12R9Id50b80eR9UnseededLastFilter"] = 22;               // 2016 for Analysis
     //HLT_DiMu9_Ele9_CaloIdL_TrackIdL                                                                     
     eleSingleFilters["hltDiMu9Ele9CaloIdLTrackIdLElectronlegDphiFilter"] = 23; 
     //HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL                                                    
@@ -131,6 +131,15 @@ void ggNtuplizer::initTriggerFilters(const edm::Event &e) {
     eleSingleFilters["hltEG32L1SingleEGOrEtFilter"] = 39;
     eleSingleFilters["hltEG32L1SingleAndDoubleEGEtFilter"] = 40;
     eleSingleFilters["hltL1sSingleEG"] = 41;
+    
+    // YEAR 2017, 2018
+    //HLT_Ele20_eta2p1_WPLoose_Gsf_v6
+    eleSingleFilters["hltEle20erWPLoose1GsfTrackIsoFilter"] = 42;  // 2017 for Analysis
+    //HLT_Diphoton30_22_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90_v13
+    eleSingleFilters["hltEG22Iso60CaloId15b35eHE12R9Id50b80eTrackIsoUnseededLastFilter"] = 43; // 2017 for Analysis
+    eleSingleFilters["hltEG22R9Id85b90eHE12R9Id50b80eR9UnseededLastFilter"] = 44;              // 2017 for Analysis
+    eleSingleFilters["hltEle32L1DoubleEGWPTightGsfTrackIsoFilter"] = 45;              // 2017 for Analysis
+    eleSingleFilters["hltEle35noerWPTightGsfTrackIsoFilter"] = 46;              // HLT_Ele35_WPTight_Gsf
 
     //Double electron triggers
     //HLT_DoubleEle24_22_eta2p1_WPLoose_Gsf_v
@@ -152,8 +161,8 @@ void ggNtuplizer::initTriggerFilters(const edm::Event &e) {
     eleDoubleFilters["hltEle16Ele12Ele8CaloIdLTrackIdLDphiLeg3Filter"]                    = 11;
 
     muFilters["hltMu17Photon30IsoCaloIdMuonlegL3Filtered17Q"] = 0; //HLT_Mu17_Photon30_IsoCaloId_v* muon
-    muFilters["hltL3crIsoL1sMu22L1f0L2f10QL3f24QL3trkIsoFiltered0p09"] = 1; //HLT_IsoMu24_v1
-    muFilters["hltL3fL1sL1Mu5IsoEG18L1f5L2f7L3Filtered17"] = 2; //HLT_Mu17_Photon*  muon
+    muFilters["hltL3crIsoL1sMu22L1f0L2f10QL3f24QL3trkIsoFiltered0p09"] = 1; //HLT_IsoMu24_v1         2016 for Analysis
+    muFilters["hltL3fL1sL1Mu5IsoEG18L1f5L2f7L3Filtered17"] = 2; //HLT_Mu17_Photon*  muon             2016 for Analysis
     muFilters["hltDiMu9Ele9CaloIdLTrackIdLMuonlegL3Filtered9"] = 3; //HLT_DiMu9_Ele9_CaloIdL_TrackIdL_v3 muon
     muFilters["hltMu23TrkIsoVVLEle12CaloIdLTrackIdLIsoVLMuonlegL3IsoFiltered23"] = 4; //HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL
     muFilters["hltMu8DiEle12CaloIdLTrackIdLMuonlegL3Filtered8"] = 5; //LT_Mu8_DiEle12_CaloIdL_TrackIdL_v3 muon
@@ -170,10 +179,10 @@ void ggNtuplizer::initTriggerFilters(const edm::Event &e) {
     muFilters["hltL3crIsoL1sDoubleMu125L1f16erL2f10QL3f17QL3Dz0p2L3crIsoRhoFiltered0p15IterTrk02"] = 16; //HLT_DoubleIsoMu17_eta2p1
     muFilters["hltL3crIsoL1sMu22Or25L1f0L2f10QL3f27QL3trkIsoFiltered0p09"] = 17; //HLT_IsoMu27
     muFilters["hltL3fL1sMu20L1f0Tkf22QL3trkIsoFiltered0p09"] = 18; //HLT_IsoTkMu22
-    muFilters["hltL3fL1sMu22L1f0Tkf24QL3trkIsoFiltered0p09"] = 19; //HLT_IsoTkMu24
+    muFilters["hltL3fL1sMu22L1f0Tkf24QL3trkIsoFiltered0p09"] = 19; //HLT_IsoTkMu24                         2016 for Analysis
     muFilters["hltL3fL1sMu22Or25L1f0Tkf27QL3trkIsoFiltered0p09"] = 20; //HLT_IsoTkMu27
-    muFilters["hltL3fL1sL1Mu5IsoEG18ORL1Mu5IsoEG20L1f5L2f7L3Filtered17"] = 21; //HLT_Mu17_Photon*  muon
-    muFilters["hltL3fL1sMu12Diphoton20L1f0L2f8QL3Filtered12"] = 22; //HLTMu12_DIPho20 (2017)
+    muFilters["hltL3fL1sL1Mu5IsoEG18ORL1Mu5IsoEG20L1f5L2f7L3Filtered17"] = 21; //HLT_Mu17_Photon*  muon    2016 for Analysis
+    muFilters["hltL3fL1sMu12Diphoton20L1f0L2f8QL3Filtered12"] = 22; //HLTMu12_DIPho20 (2017)               2016 for Analysis
     muFilters["hltMu23TrkIsoVVLEle12CaloIdLTrackIdLIsoVLDZFilter"] = 23; //HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v
     muFilters["hltMu23TrkIsoVVLEle12CaloIdLTrackIdLIsoVLElectronlegTrackIsoFilter"] = 24; //HLT_Mu23_TrkIsoVVL_Ele12*
     muFilters["hltMu12TrkIsoVVLEle23CaloIdLTrackIdLIsoVLDZFilter"] = 25; //DZ of HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ
@@ -181,9 +190,10 @@ void ggNtuplizer::initTriggerFilters(const edm::Event &e) {
     muFilters["hltDoubleMu9DZFilter"] = 27;
     muFilters["hltL3fL1Mu6DoubleEG10f0Filtered8"] = 28; // HLT_Mu8_DiEle12_CaloIdL_TrackIdL_DZ_
     muFilters["hltDoubleMu207Mass0to30Photon23L3Filtered"] = 29;  //filter of DoubleMu20_Pho23 (2017)
-    muFilters["hltL3crIsoL1sSingleMu22L1f0L2f10QL3f24QL3trkIsoFiltered0p07"] = 30; //HLT_IsoMu24 (2017)
-    muFilters["hltL3crIsoL1sMu22Or25L1f0L2f10QL3f27QL3trkIsoFiltered0p07"] = 31; //HLT_IsoMu27 (2017)
-
+    muFilters["hltL3crIsoL1sSingleMu22L1f0L2f10QL3f24QL3trkIsoFiltered0p07"] = 30; //HLT_IsoMu24 (2017) 2017 for Analysis
+    muFilters["hltL3crIsoL1sMu22Or25L1f0L2f10QL3f27QL3trkIsoFiltered0p07"] = 31; //HLT_IsoMu27 (2017)   2017 for Analysis
+    muFilters["hltL3fL1sMu5EG20orMu20EG15L1f5L2NVf16L3NoFiltersNoVtxFiltered43"] = 32; //HLT_Mu43NoFiltersNoVtx_Photon43_CaloIdL_v5  2017 for Analysis
+    muFilters["hltL3fL1sMu5EG20orMu20EG15L1f5L2NVf16L3NoFiltersNoVtxFiltered48"] = 33; //HLT_Mu48NoFiltersNoVtx_Photon48_CaloIdL_v5  2017 for Analysis 
     if ( year_ == 2016 )
     {
        phoSingleFilters["hltEG22HEFilter"]      = 0;
@@ -266,8 +276,8 @@ void ggNtuplizer::initTriggerFilters(const edm::Event &e) {
     phoDoubleFilters["hltEG18R9Id85b90eHE12R9Id50b80eR9pixSeedUnseededLastFilter"]                          = 4;
     //For both HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass95_v and 
     //HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_DoublePixelSeedMatch_Mass70_v
-    phoDoubleFilters["hltEG30LR9Id85b90eHE12R9Id50b80eR9IdLastFilter"]                                      = 5;
-    phoDoubleFilters["hltEG30LIso60CaloId15b35eHE12R9Id50b80eEcalIsoLastFilter"]                            = 6;
+    phoDoubleFilters["hltEG30LR9Id85b90eHE12R9Id50b80eR9IdLastFilter"]                                      = 5; // 2016 for Analysis  2017 for Analysis
+    phoDoubleFilters["hltEG30LIso60CaloId15b35eHE12R9Id50b80eEcalIsoLastFilter"]                            = 6; // 2016 for Analysis  2017 for Analysis
     //For path HLT_Diphoton30_18_Solid_R9Id_AND_IsoCaloId_AND_HE_R9Id_Mass55_v           
     phoDoubleFilters["hltEG18Iso60CaloId15b35eHE10R9Id50b80eTrackIsoSolidUnseededLastFilter"]               = 7;
     phoDoubleFilters["hltEG18R9Id85b90eHE10R9Id50b80eR9UnseededLastFilter"]                                 = 8;
@@ -294,11 +304,15 @@ void ggNtuplizer::initTriggerFilters(const edm::Event &e) {
     phoDoubleFilters["hltEG36R9Id85HE10R9Id65R9IdEta2LastFilter"]                                           = 25;
     phoDoubleFilters["hltEG36Iso50T80LCaloId24b40eHE10R9Id65Eta2HcalIsoLastFilter"]                         = 26;
     phoDoubleFilters["hltMu17Photon30IsoCaloIdPhotonlegTrackIsoFilter"]                                     = 27; //HLT_Mu17_Photon30_CaloIdL_L1ISO_v photon leg
-    phoDoubleFilters["hltMu17Photon30CaloIdLL1ISOHEFilter"]                                                 = 28;
-    phoDoubleFilters["hltMu17Photon30CaloIdLL1ISOORHEFilter"]                                               = 29;
-    phoDoubleFilters["hltEG70HEFilter"]                                                                     = 30; //seeded leg of DoublePho70
+    phoDoubleFilters["hltMu17Photon30CaloIdLL1ISOHEFilter"]                                                 = 28; // 2016 for Analysis
+    phoDoubleFilters["hltMu17Photon30CaloIdLL1ISOORHEFilter"]                                               = 29; // 2016 for Analysis
+    phoDoubleFilters["hltEG70HEFilter"]                                                                     = 30; //seeded leg of DoublePho70 ( 2016 for Analysis 2017 for Analysis
     phoDoubleFilters["hltDiEG70HEUnseededFilter"]                                                           = 31; //unseeded leg of DoublePho70
     phoDoubleFilters["hltMu12DiEG20HEUnseededFilter"]                                                       = 32; //filter of Mu12_DiPho20
+    //For path HLT_Diphoton30_22_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90_v13
+    phoDoubleFilters["hltEG22Iso60CaloId15b35eHE12R9Id50b80eTrackIsoUnseededLastFilter"]                    = 33;
+    phoDoubleFilters["hltEG22R9Id85b90eHE12R9Id50b80eR9UnseededLastFilter"]                                 = 34;
+    phoDoubleFilters["hltMu17Photon30IsoCaloIdPhotonlegHEFilter"]                                           = 35; //HLT_Mu17_Photon30_IsoCaloId_v6  2017 for Analysis
 
     //triple photon filter                                                           
     phoTripleFilters["hltEG20CaloIdLV2ClusterShapeL1TripleEGFilter"]         = 0;  //1st leg of TriplePho20_Calo

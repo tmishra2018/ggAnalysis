@@ -10,11 +10,11 @@ process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
 process.load("Configuration.StandardSequences.MagneticField_AutoFromDBCurrent_cff" )
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_condDBv2_cff')
 from Configuration.AlCa.GlobalTag_condDBv2 import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, '106X_dataRun2_v35')
+process.GlobalTag = GlobalTag(process.GlobalTag, '106X_dataRun2_v35') # for MiniAODv2
 
 #process.Tracer = cms.Service("Tracer")
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 
 process.source = cms.Source("PoolSource",
@@ -62,7 +62,7 @@ process.ggNtuplizer.dumpSoftDrop= cms.bool(True)
 process.ggNtuplizer.dumpTaus=cms.bool(False)
 #process.ggNtuplizer.ak4JetSrc=cms.InputTag("slimmedJetsJEC")
 #process.ggNtuplizer.pfMETLabel=cms.InputTag("slimmedMETsModifiedMET")
-#process.ggNtuplizer.patTriggerResults=cms.InputTag("TriggerResults", "", "DQM")
+process.ggNtuplizer.patTriggerResults=cms.InputTag("TriggerResults", "", "HLT")
 process.ggNtuplizer.addFilterInfoMINIAOD=cms.bool(True)
 process.load("ggAnalysis.ggNtuplizer.ggMETFilters_cff")
 

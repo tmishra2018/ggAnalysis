@@ -44,7 +44,7 @@ vector<float>     mutrkKink_;
 vector<float>     muBestTrkPtError_;
 vector<float>     muBestTrkPt_;
 vector<int>       muBestTrkType_;
-
+vector<float>     muPFMiniIso_;
 void ggNtuplizer::branchesMuons(TTree* tree) {
 
   tree->Branch("nMu",           &nMu_);
@@ -86,6 +86,7 @@ void ggNtuplizer::branchesMuons(TTree* tree) {
   tree->Branch("muBestTrkPtError",       &muBestTrkPtError_);
   tree->Branch("muBestTrkPt",            &muBestTrkPt_);
   tree->Branch("muBestTrkType",          &muBestTrkType_);
+  tree->Branch("muPFMiniIso",            &muPFMiniIso_);
 }
 
 void ggNtuplizer::fillMuons(const edm::Event& e, math::XYZPoint& pv, reco::Vertex vtx) {
@@ -129,7 +130,7 @@ void ggNtuplizer::fillMuons(const edm::Event& e, math::XYZPoint& pv, reco::Verte
   muBestTrkPtError_      .clear();
   muBestTrkPt_           .clear();
   muBestTrkType_         .clear();
-
+  muPFMiniIso_           .clear();
   nMu_ = 0;
 
   edm::Handle<edm::View<pat::Muon> > muonHandle;
@@ -182,6 +183,7 @@ void ggNtuplizer::fillMuons(const edm::Event& e, math::XYZPoint& pv, reco::Verte
     if (iMu->passed(reco::Muon::MiniIsoTight))           tmpmuIDbit += pow(2, 20);
     if (iMu->passed(reco::Muon::MiniIsoVeryTight))       tmpmuIDbit += pow(2, 21);
     muIDbit_.push_back(tmpmuIDbit);
+
     muFiredTrgs_  .push_back(matchMuonTriggerFilters(iMu->pt(), iMu->eta(), iMu->phi()));
     muFiredL1Trgs_.push_back(matchL1TriggerFilters(iMu->pt(), iMu->eta(), iMu->phi()));
 
@@ -234,7 +236,7 @@ void ggNtuplizer::fillMuons(const edm::Event& e, math::XYZPoint& pv, reco::Verte
     muPFPhoIso03_ .push_back(iMu->pfIsolationR03().sumPhotonEt);
     muPFNeuIso03_ .push_back(iMu->pfIsolationR03().sumNeutralHadronEt);
     muPFPUIso03_  .push_back(iMu->pfIsolationR03().sumPUPt);
-
+    muPFMiniIso_  .push_back(getMiniIsolation(pfcands, dynamic_cast<const reco::Candidate *>(&(*iMu)), 0.05, 0.2, 10., false));
     nMu_++;
   }
 
