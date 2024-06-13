@@ -1,14 +1,15 @@
 import FWCore.ParameterSet.Config as cms
 
-from RecoMET.METFilters.BadPFMuonFilter_cfi import *
-BadPFMuonFilter.muons = cms.InputTag("slimmedMuons")
-BadPFMuonFilter.PFCandidates = cms.InputTag("packedPFCandidates")
+from RecoMET.METFilters.BadPFMuonDzFilter_cfi import BadPFMuonDzFilter
 
-from RecoMET.METFilters.BadChargedCandidateFilter_cfi import *
-BadChargedCandidateFilter.muons = cms.InputTag("slimmedMuons")
-BadChargedCandidateFilter.PFCandidates = cms.InputTag("packedPFCandidates")
+BadPFMuonFilterUpdateDz = BadPFMuonDzFilter.clone(
+    muons = cms.InputTag("slimmedMuons"),
+    vtx   = cms.InputTag("offlineSlimmedPrimaryVertices"),
+    PFCandidates = cms.InputTag("packedPFCandidates"),
+    minDzBestTrack = cms.double(0.5),
+    taggingMode    = cms.bool(True)
+)
 
 ggMETFiltersSequence = cms.Sequence(
-     BadPFMuonFilter *
-     BadChargedCandidateFilter 
+    BadPFMuonFilterUpdateDz
 )
