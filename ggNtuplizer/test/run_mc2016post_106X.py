@@ -18,7 +18,7 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 
 process.source = cms.Source("PoolSource",
                             fileNames = cms.untracked.vstring(
-                                '/store/mc/RunIISummer20UL16MiniAOD/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v13-v2/260000/0574D201-A8CC-534A-921C-F30BAD750FB4.root'
+                                '/store/mc/RunIISummer20UL16MiniAODv2/ZGToLLG_01J_5f_TuneCP5_13TeV-amcatnloFXFX-pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/120000/0053C55A-4234-5F4C-8BD4-511074049ECE.root'
                             ))
 
 #process.load("PhysicsTools.PatAlgos.patSequences_cff")
@@ -63,7 +63,7 @@ process.RandomNumberGeneratorService = cms.Service("RandomNumberGeneratorService
                                                    )
 
 process.load("ggAnalysis.ggNtuplizer.ggNtuplizer_miniAOD_cfi")
-process.ggNtuplizer.year=cms.int32(2017)
+process.ggNtuplizer.year=cms.int32(2016)
 process.ggNtuplizer.doGenParticles=cms.bool(True)
 process.ggNtuplizer.dumpPFPhotons=cms.bool(True)
 process.ggNtuplizer.dumpHFElectrons=cms.bool(False)

@@ -10,7 +10,7 @@ process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
 process.load("Configuration.StandardSequences.MagneticField_AutoFromDBCurrent_cff")
 process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_condDBv2_cff")
 from Configuration.AlCa.GlobalTag_condDBv2 import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, '106X_mc2017_realistic_v8')
+process.GlobalTag = GlobalTag(process.GlobalTag, '106X_mc2017_realistic_v9')
 
 #process.Tracer = cms.Service("Tracer")
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
@@ -18,7 +18,7 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 
 process.source = cms.Source("PoolSource",
                             fileNames = cms.untracked.vstring(
-                                '/store/mc/RunIISummer19UL17MiniAODv2/ZGTo2NuG_EtG075_TuneCP5_VBS_13TeV-madgraph-pythia8/MINIAODSIM/106X_mc2017_realistic_v9-v1/270000/47DD1386-3258-434E-8F4C-3C2D65AC6781.root'
+                                '/store/mc/RunIISummer20UL17MiniAODv2/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/MINIAODSIM/106X_mc2017_realistic_v9-v2/100000/00827E5C-253F-F942-9751-3F3277340A21.root'
                             ))
 
 #process.load("PhysicsTools.PatAlgos.patSequences_cff")
@@ -73,7 +73,7 @@ process.ggNtuplizer.dumpSoftDrop= cms.bool(True)
 process.ggNtuplizer.dumpTaus=cms.bool(False)
 process.ggNtuplizer.triggerEvent=cms.InputTag("slimmedPatTrigger", "", "PAT")
 process.ggNtuplizer.ak4JetSrc=cms.InputTag("slimmedJetsJEC")
-#process.ggNtuplizer.pfMETLabel=cms.InputTag("slimmedMETsModifiedMET")
+process.ggNtuplizer.pfMETLabel=cms.InputTag("slimmedMETsModifiedMET")
 
 process.cleanedMu = cms.EDProducer("PATMuonCleanerBySegments",
                                    src = cms.InputTag("slimmedMuons"),
@@ -82,7 +82,7 @@ process.cleanedMu = cms.EDProducer("PATMuonCleanerBySegments",
                                    fractionOfSharedSegments = cms.double(0.499))
 
 process.p = cms.Path(
-#    process.fullPatMetSequenceModifiedMET *
+    #process.fullPatMetSequenceModifiedMET *
     process.egammaPostRecoSeq *
     process.cleanedMu *
     process.jetCorrFactors *

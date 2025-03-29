@@ -10,16 +10,16 @@ process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
 process.load("Configuration.StandardSequences.MagneticField_AutoFromDBCurrent_cff" )
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_condDBv2_cff')
 from Configuration.AlCa.GlobalTag_condDBv2 import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, '106X_dataRun2_v35')
+process.GlobalTag = GlobalTag(process.GlobalTag, '106X_dataRun2_v35')   # for MiniAODv2
 
 #process.Tracer = cms.Service("Tracer")
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 
 process.source = cms.Source("PoolSource",
                             fileNames = cms.untracked.vstring(
-        'root://cmsxrootd.fnal.gov//store/data/Run2016B/DoubleEG/MINIAOD/ver2_HIPM_UL2016_MiniAODv2-v1/130000/359FB33A-068B-4341-8448-7F6D4FC72B19.root'
+        'root://cmsxrootd.fnal.gov//store/data/Run2016F/MET/MINIAOD/UL2016_MiniAODv2-v2/120000/B91B35CA-D3CF-874D-89DF-27B2CD3671DB.root'
         )
                             )
 
@@ -50,6 +50,18 @@ runOnData( process,  names=['Photons', 'Electrons','Muons','Taus','Jets'], outpu
 #removeMCMatching(process, names=['All'], outputModules=[])
 
 process.TFileService = cms.Service("TFileService", fileName = cms.string('ggtree_data.root'))
+### update JEC
+process.load("PhysicsTools.PatAlgos.producersLayer1.jetUpdater_cff")
+process.jetCorrFactors = process.updatedPatJetCorrFactors.clone(
+    src = cms.InputTag("slimmedJets"),
+    levels = ['L1FastJet', 'L2Relative', 'L3Absolute', 'L2L3Residual'],
+    payload = 'AK4PFchs')
+
+process.slimmedJetsJEC = process.updatedPatJets.clone(
+    jetSource = cms.InputTag("slimmedJets"),
+    jetCorrFactorsSource = cms.VInputTag(cms.InputTag("jetCorrFactors"))
+    )
+
 
 process.load("ggAnalysis.ggNtuplizer.ggNtuplizer_miniAOD_cfi")
 process.ggNtuplizer.year=cms.int32(2016)
@@ -60,9 +72,9 @@ process.ggNtuplizer.dumpJets=cms.bool(True)
 process.ggNtuplizer.dumpAK8Jets=cms.bool(False)
 process.ggNtuplizer.dumpSoftDrop= cms.bool(True)
 process.ggNtuplizer.dumpTaus=cms.bool(False)
-#process.ggNtuplizer.ak4JetSrc=cms.InputTag("slimmedJetsJEC")
+process.ggNtuplizer.ak4JetSrc=cms.InputTag("slimmedJetsJEC")
 #process.ggNtuplizer.pfMETLabel=cms.InputTag("slimmedMETsModifiedMET")
-#process.ggNtuplizer.patTriggerResults=cms.InputTag("TriggerResults", "", "DQM")
+process.ggNtuplizer.patTriggerResults=cms.InputTag("TriggerResults", "", "HLT")
 process.ggNtuplizer.addFilterInfoMINIAOD=cms.bool(True)
 process.load("ggAnalysis.ggNtuplizer.ggMETFilters_cff")
 
@@ -77,8 +89,8 @@ process.p = cms.Path(
     process.egammaPostRecoSeq *
     process.cleanedMu *
     process.ggMETFiltersSequence *
-#    process.jetCorrFactors *
-#    process.slimmedJetsJEC *
+    process.jetCorrFactors *
+    process.slimmedJetsJEC *
     process.ggNtuplizer
     )
 
