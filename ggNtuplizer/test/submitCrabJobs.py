@@ -35,7 +35,7 @@ datasets = {
 #        "/DoubleMuon/Run2016G-UL2016_MiniAODv2-v1/MINIAOD",
 #         "/DoubleMuon/Run2016H-UL2016_MiniAODv2-v2/MINIAOD",
 
-#        "/DoubleEG/Run2016B-ver1_HIPM_UL2016_MiniAODv2-v1/MINIAOD",
+          "/DoubleEG/Run2016B-ver1_HIPM_UL2016_MiniAODv2-v1/MINIAOD",
 #        "/DoubleEG/Run2016B-ver2_HIPM_UL2016_MiniAODv2-v1/MINIAOD",
 #        "/DoubleEG/Run2016C-HIPM_UL2016_MiniAODv2-v1/MINIAOD",
 #	 "/DoubleEG/Run2016D-HIPM_UL2016_MiniAODv2-v1/MINIAOD",
@@ -44,7 +44,7 @@ datasets = {
         
 #	"/DoubleEG/Run2016F-UL2016_MiniAODv2-v1/MINIAOD",
 #	"/DoubleEG/Run2016G-UL2016_MiniAODv2-v1/MINIAOD",
-	"/DoubleEG/Run2016H-UL2016_MiniAODv2-v1/MINIAOD",
+#	"/DoubleEG/Run2016H-UL2016_MiniAODv2-v1/MINIAOD",
 
 #        "/SingleElectron/Run2016B-ver1_HIPM_UL2016_MiniAODv2-v2/MINIAOD",
 #        "/SingleElectron/Run2016B-ver2_HIPM_UL2016_MiniAODv2-v2/MINIAOD",
@@ -54,7 +54,7 @@ datasets = {
 #        "/SingleElectron/Run2016F-HIPM_UL2016_MiniAODv2-v2/MINIAOD",
 
 #        "/SingleElectron/Run2016F-UL2016_MiniAODv2-v2/MINIAOD",
-	 "/SingleElectron/Run2016G-UL2016_MiniAODv2-v2/MINIAOD",
+#	     "/SingleElectron/Run2016G-UL2016_MiniAODv2-v2/MINIAOD",
 #        "/SingleElectron/Run2016H-UL2016_MiniAODv2-v2/MINIAOD",
 
 
@@ -71,7 +71,7 @@ datasets = {
 #        "/SingleMuon/Run2016G-UL2016_MiniAODv2-v2/MINIAOD",
 #        "/SingleMuon/Run2016H-UL2016_MiniAODv2-v2/MINIAOD",
 
-#         "/MuonEG/Run2016B-ver1_HIPM_UL2016_MiniAODv2-v2/MINIAOD",
+          "/MuonEG/Run2016B-ver1_HIPM_UL2016_MiniAODv2-v2/MINIAOD"
 #         "/MuonEG/Run2016B-ver2_HIPM_UL2016_MiniAODv2-v2/MINIAOD",
 #         "/MuonEG/Run2016C-HIPM_UL2016_MiniAODv2-v2/MINIAOD",
 #         "/MuonEG/Run2016D-HIPM_UL2016_MiniAODv2-v2/MINIAOD",
@@ -142,8 +142,8 @@ datasets = {
 }
 
 psetFiles = {
-#    2016: "run_data2016preVFP_106X.py",
-    2016: "run_data2016postVFP_106X.py",
+    2016: "run_data2016preVFP_106X.py",
+#   2016: "run_data2016postVFP_106X.py",
     2017: "run_data2017_106X.py",
     2018: "run_data2018_106X.py"
 }

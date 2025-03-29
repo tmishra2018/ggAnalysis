@@ -18,5 +18,5 @@ config.Data.unitsPerJob = 2
 config.Data.totalUnits      = -1
 config.Data.outLFNDirBase = ""
 config.Site.storageSite = ""
-config.Site.storageSite     = 'T2_IN_TIFR'
-#config.Site.storageSite     = 'T2_CH_CERN'
+#config.Site.storageSite     = 'T2_IN_TIFR'
+config.Site.storageSite     = 'T2_CH_CERN'

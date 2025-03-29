@@ -22,24 +22,37 @@ def execute_in_crab_env(commandToRun, printDebug=False):
 
 datasets = {
     2016: [
-      "/SMS-T5Wg_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODv2-FSUL16_106X_mcRun2_asymptotic_v17-v2/MINIAODSIM",
-      "/SMS-TChiWG_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODv2-FSUL16_106X_mcRun2_asymptotic_v17-v2/MINIAODSIM"
+### "pre-VFP" (aka "HIPM" or "APV"): eras B-F
+         "/WW_TuneCP5_13TeV-pythia8/RunIISummer20UL16MiniAODAPVv2-106X_mcRun2_asymptotic_preVFP_v11-v1/MINIAODSIM",
+         "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODAPVv2-106X_mcRun2_asymptotic_preVFP_v11-v1/MINIAODSIM",
+
+### "post-VFP" (aka "no-HIPM"): eras F(7 runs)-H 
+
+ #        "/WW_TuneCP5_13TeV-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+ #        "/WGJets_MonoPhoton_PtG-130_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+ #        "/WWG_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+ #        "/WZG_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
+ #        "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM",
     ],
     2017: [
-     "/SMS-T5Wg_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17MiniAODv2-FSUL17_106X_mc2017_realistic_v9-v2/MINIAODSIM",
-     "/SMS-TChiWG_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17MiniAODv2-FSUL17_106X_mc2017_realistic_v9-v2/MINIAODSIM"
+ #        "/WGJets_MonoPhoton_PtG-40to130_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL17MiniAODv2-106X_mc2017_realistic_v9-v2/MINIAODSIM",
+	  "/WGJets_MonoPhoton_PtG-130_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL17MiniAODv2-106X_mc2017_realistic_v9-v2/MINIAODSIM"
+ #       "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL17MiniAODv2-106X_mc2017_realistic_v9-v2/MINIAODSIM",
     ],
     2018: [
-     "/SMS-T5Wg_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18MiniAODv2-FSUL18_106X_upgrade2018_realistic_v16_L1v1-v2/MINIAODSIM",
-     "/SMS-TChiWG_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18MiniAODv2-FSUL18_106X_upgrade2018_realistic_v16_L1v1-v2/MINIAODSIM"
+
+         "/WGJets_MonoPhoton_PtG-40to130_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-v2/MINIAODSIM",
+         "/WGJets_MonoPhoton_PtG-130_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-v2/MINIAODSIM",
+         "/WWG_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-v2/MINIAODSIM",
+         "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-v2/MINIAODSIM",
     ]
 }
 
 psetFiles = {
-    #2016: "T5Wg_run_mc2016_preVFP_106X.py",
-    2016: "T5Wg_run_mc2016_postVFP_106X.py",
-    2017: "T5Wg_run_mc2017_106X.py",
-    2018: "T5Wg_run_mc2018_106X.py"
+    2016: "DYJetsToLL_run_mc2016_preVFP_106X.py",
+  # 2016: "DYJetsToLL_run_mc2016_106X.py",
+    2017: "DYJetsToLL_run_mc2017_106X.py",
+    2018: "DYJetsToLL_run_mc2018_106X.py"
 }
 
 yearsToRun = []
@@ -60,7 +73,6 @@ def extract_dataset_identifier(dataset):
     splitDataset = dataset.split("/")
     if not(len(splitDataset) == 4):
         sys.exit("dataset: {d} in unexpected format; splitDataset = {s}".format(d=dataset, s=splitDataset))
-    #return (splitDataset[1] + "_" + splitDataset[2] + "preVFP")
     return (splitDataset[1] + "_" + splitDataset[2])
 
 # execute_in_crab_env("which crab && type crab")
@@ -75,6 +87,6 @@ for year in yearsToRun:
         #lfnDirBase = "/store/group/phys_susy/Tribeni/{did}".format(did=datasetIdentifier)     
         lfnDirBase = "/store/user/trmishra/{did}".format(did=datasetIdentifier)     
 	crabReqName = "ntuplizer_10620_mc_{did}".format(did=datasetIdentifier)
-        commandToSubmit += "-c MC_crabConfig.py General.requestName=crabReqName General.workArea=CRAB_mc/{did} JobType.psetName={p} Data.inputDataset={d} Data.outLFNDirBase={lDB}".format(did=datasetIdentifier, d=dataset, p=psetFiles[year], lDB=lfnDirBase)
+        commandToSubmit += "-c data_crabConfig.py General.requestName=crabReqName General.workArea=CRAB_mc/crab_10620_mc_{did} JobType.psetName={p} Data.inputDataset={d} Data.outLFNDirBase={lDB}".format(did=datasetIdentifier, d=dataset, p=psetFiles[year], lDB=lfnDirBase)
         print(commandToSubmit)
         execute_in_crab_env(commandToSubmit)

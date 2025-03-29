@@ -22,7 +22,7 @@ config.section_("Site")
 #config.Data.outLFNDirBase = '/store/group/phys_susy/Tribeni'
 
 config.Site.storageSite = "T3_US_FNALLPC"
-config.Data.outLFNDirBase = '/eos/uscms/store/user/lpcsusyphotons/Tribeni'
+config.Data.outLFNDirBase = '/eos/uscms/store/user/lpcsusyphotons/SoftPhoton/Tribeni'
 #config.Site.storageSite     = 'T2_IN_TIFR'
 
 
