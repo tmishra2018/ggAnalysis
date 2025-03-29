@@ -381,11 +381,11 @@ void ggNtuplizer::initTriggerFilters(const edm::Event &e) {
     l1Filters["hltL1sSingleAndDoubleEGNonIsoOrWithEG26WithJetAndTau"] = 31;
     
   }
+ /*
+  edm::Handle<pat::TriggerObjectStandAloneCollection> triggerHandleMiniAOD;
+  e.getByToken(triggerObjectsLabel_, triggerHandleMiniAOD);
  
-  //edm::Handle<pat::TriggerObjectStandAloneCollection> triggerHandleMiniAOD;
-  //e.getByToken(triggerObjectsLabel_, triggerHandleMiniAOD);
- 
-  /*
+  
   edm::Handle<edm::TriggerResults> trgResultsHandle;
   e.getByToken(trgResultsLabel_, trgResultsHandle);
 

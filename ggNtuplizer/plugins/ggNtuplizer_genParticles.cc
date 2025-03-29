@@ -200,6 +200,7 @@ void ggNtuplizer::fillGenInfo(const edm::Event& e) {
 
   edm::Handle<GenEventInfoProduct> genEventInfoHandle;
   e.getByToken(generatorLabel_, genEventInfoHandle);
+  EventTag_ = modelTag_;
 
   if (genEventInfoHandle.isValid()) {
 

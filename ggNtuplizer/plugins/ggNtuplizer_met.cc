@@ -67,16 +67,16 @@ void ggNtuplizer::fillMET(const edm::Event& e, const edm::EventSetup& es) {
 
   metFilters_ = 0;
 
-  if (addFilterInfoMINIAOD_) {
+    if (addFilterInfoMINIAOD_) {
     string filterNamesToCheck[9] = {
       "Flag_HBHENoiseFilter",
-      "Flag_HBHENoiseIsoFilter", 
+      "Flag_HBHENoiseIsoFilter",
       "Flag_globalSuperTightHalo2016Filter",
       "Flag_goodVertices",
       "Flag_eeBadScFilter",
       "Flag_EcalDeadCellTriggerPrimitiveFilter",
       "Flag_BadPFMuonFilter",
-      "Flag_BadChargedCandidateFilter",
+      "Flag_ecalBadCalibFilter",
       "Flag_BadPFMuonDzFilter"
     };
 

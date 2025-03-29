@@ -38,6 +38,8 @@
 #include "Geometry/Records/interface/CaloTopologyRecord.h"
 #include "HLTrigger/HLTcore/interface/HLTPrescaleProvider.h"
 #include "JetMETCorrections/Modules/interface/JetResolution.h"
+#include "SimDataFormats/GeneratorProducts/interface/GenLumiInfoHeader.h"
+
 
 using namespace std;
 
@@ -52,7 +54,7 @@ class ggNtuplizer : public edm::EDAnalyzer {
   static void fillDescriptions(edm::ConfigurationDescriptions& descriptions);
   
  private:
-  
+  virtual void beginLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&);
   //   virtual void beginJob() {};
   virtual void analyze(const edm::Event&, const edm::EventSetup&);
   //   virtual void endJob() {};
@@ -131,7 +133,7 @@ class ggNtuplizer : public edm::EDAnalyzer {
   edm::EDGetTokenT<double>                          rhoCentralLabel_;
   edm::EDGetTokenT<trigger::TriggerEvent>           trgEventLabel_;
   edm::EDGetTokenT<pat::TriggerObjectStandAloneCollection> triggerObjectsLabel_;
-  //edm::EDGetTokenT<edm::TriggerResults>             trgResultsLabel_;
+  edm::EDGetTokenT<edm::TriggerResults>             trgResultsLabel_;
   string                                            trgResultsProcess_;
   edm::EDGetTokenT<edm::TriggerResults>             patTrgResultsLabel_;
   edm::EDGetTokenT<GenEventInfoProduct>             generatorLabel_;
@@ -201,6 +203,7 @@ class ggNtuplizer : public edm::EDAnalyzer {
   //boost::shared_ptr<FactorizedJetCorrector> jecAK8pSD_;
   //std::vector<std::string> jecAK8PayloadNames_;
   HLTPrescaleProvider hltPrescaleProvider_;
+  TString modelTag_;
 };
 
 #endif

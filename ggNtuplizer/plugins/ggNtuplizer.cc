@@ -32,17 +32,17 @@ ggNtuplizer::ggNtuplizer(const edm::ParameterSet& ps) :
 
   trgFilterDeltaPtCut_       = ps.getParameter<double>("trgFilterDeltaPtCut");
   trgFilterDeltaRCut_        = ps.getParameter<double>("trgFilterDeltaRCut");
-
+	mayConsume<GenLumiInfoHeader,edm::InLumi> (edm::InputTag("generator"));
   vtxLabel_                  = consumes<reco::VertexCollection>        (ps.getParameter<InputTag>("VtxLabel"));
   vtxBSLabel_                = consumes<reco::VertexCollection>        (ps.getParameter<InputTag>("VtxBSLabel"));
   rhoLabel_                  = consumes<double>                        (ps.getParameter<InputTag>("rhoLabel"));
   rhoAllLabel_               = consumes<double>                        (ps.getParameter<InputTag>("rhoAllLabel"));
   rhoCentralLabel_           = consumes<double>                        (ps.getParameter<InputTag>("rhoCentralLabel"));
-  //trgEventLabel_             = consumes<trigger::TriggerEvent>         (ps.getParameter<InputTag>("triggerEvent"));
-  //triggerObjectsLabel_       = consumes<pat::TriggerObjectStandAloneCollection>(ps.getParameter<edm::InputTag>("triggerEvent"));
-  //trgResultsLabel_           = consumes<edm::TriggerResults>           (ps.getParameter<InputTag>("triggerResults"));
+  trgEventLabel_             = consumes<trigger::TriggerEvent>         (ps.getParameter<InputTag>("triggerEvent"));
+  triggerObjectsLabel_       = consumes<pat::TriggerObjectStandAloneCollection>(ps.getParameter<edm::InputTag>("triggerEvent"));
+  trgResultsLabel_           = consumes<edm::TriggerResults>           (ps.getParameter<InputTag>("triggerResults"));
   patTrgResultsLabel_        = consumes<edm::TriggerResults>           (ps.getParameter<InputTag>("patTriggerResults"));
-  //trgResultsProcess_         =                                          ps.getParameter<InputTag>("triggerResults").process();
+  trgResultsProcess_         =                                          ps.getParameter<InputTag>("triggerResults").process();
   generatorLabel_            = consumes<GenEventInfoProduct>           (ps.getParameter<InputTag>("generatorLabel"));
   lheEventLabel_             = consumes<LHEEventProduct>               (ps.getParameter<InputTag>("LHEEventLabel"));
   puCollection_              = consumes<vector<PileupSummaryInfo> >    (ps.getParameter<InputTag>("pileupCollection"));
@@ -122,6 +122,17 @@ ggNtuplizer::~ggNtuplizer() {
   cleanupOOTPhotons();
   delete cicPhotonId_;
 }
+
+void ggNtuplizer::beginLuminosityBlock(edm::LuminosityBlock const& iLumi, edm::EventSetup const&)
+{
+   edm::Handle<GenLumiInfoHeader> gen_header;
+   iLumi.getByLabel("generator", gen_header);
+   std::string modelName_ = "";
+   if (gen_header.isValid()) {
+      modelTag_ = gen_header->configDescription();
+   }
+}
+
 
 void ggNtuplizer::analyze(const edm::Event& e, const edm::EventSetup& es) {
 

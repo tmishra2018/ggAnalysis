@@ -490,7 +490,7 @@ void ggNtuplizer::fillGlobalEvent(const edm::Event& e, const edm::EventSetup& es
 
     //if (name.find("HLT_PFJet450_v") == string::npos) 
     //cout<<"HLT : "<<i<<" "<<name<<" "<<isPrescaled<<" "<<isFired<<endl;
-    */
+    */ 
     //if (!doGenParticles_) {
       /* to be fixed as this only works for 2017
       if      (name.find("HLT_Photon33_v")       != string::npos) phoPrescale_.insert(phoPrescale_.begin(),hltCfg.prescaleValue(prescaleSet, name));
@@ -503,8 +503,8 @@ void ggNtuplizer::fillGlobalEvent(const edm::Event& e, const edm::EventSetup& es
       //else if (name.find("HLT_Photon120_v")      != string::npos) phoPrescale_.insert(phoPrescale_.begin()+6,hltCfg.prescaleValue(prescaleSet, name));
       //else if (name.find("HLT_Photon175_v")      != string::npos) phoPrescale_.insert(phoPrescale_.begin()+7,hltCfg.prescaleValue(prescaleSet, name));
       //else if (name.find("HLT_Photon250_NoHE_v") != string::npos) phoPrescale_.insert(phoPrescale_.end(),hltCfg.prescaleValue(prescaleSet, name));
-    //}
+//    }
 
-  //}
+//  }
 
 }
