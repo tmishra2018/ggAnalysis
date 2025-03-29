@@ -107,7 +107,7 @@ vector<int>   gsfLayers_;
 vector<int>   gsfMissHits_;
 vector<float> gsfD0_;
 vector<float> gsfDz_;
-
+vector<float>  elePFMiniIso_;
 void ggNtuplizer::branchesElectrons(TTree* tree) {
 
   tree->Branch("nEle",                    &nEle_);
@@ -205,6 +205,7 @@ void ggNtuplizer::branchesElectrons(TTree* tree) {
   tree->Branch("gsfMissHits",               &gsfMissHits_);
   tree->Branch("gsfD0",                     &gsfD0_);
   tree->Branch("gsfDz",                     &gsfDz_);
+  tree->Branch("elePFMiniIso",                &elePFMiniIso_);
 }
 
 void ggNtuplizer::fillElectrons(const edm::Event &e, const edm::EventSetup &es, math::XYZPoint &pv) {
@@ -282,7 +283,7 @@ void ggNtuplizer::fillElectrons(const edm::Event &e, const edm::EventSetup &es, 
   eleResol_rho_dn_            .clear();
   eleResol_phi_up_            .clear();
   eleResol_phi_dn_            .clear();
-
+  elePFMiniIso_               .clear();
   nEle_ = 0;
 
   edm::Handle<edm::View<pat::Electron> > electronHandle;
@@ -352,7 +353,7 @@ void ggNtuplizer::fillElectrons(const edm::Event &e, const edm::EventSetup &es, 
     elePFPhoIso_        .push_back(pfIso.sumPhotonEt);
     elePFNeuIso_        .push_back(pfIso.sumNeutralHadronEt);
     elePFPUIso_         .push_back(pfIso.sumPUPt);
-
+    elePFMiniIso_       .push_back(getMiniIsolation(pfcands, dynamic_cast<const reco::Candidate *>(&(*iEle)), 0.05, 0.2, 10., false));
     eleSigmaIEtaIEtaFull5x5_.push_back(iEle->full5x5_sigmaIetaIeta());
     eleSigmaIPhiIPhiFull5x5_.push_back(iEle->full5x5_sigmaIphiIphi());
     eleR9Full5x5_           .push_back(iEle->full5x5_r9());

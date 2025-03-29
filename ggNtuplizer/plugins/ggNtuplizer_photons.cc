@@ -27,22 +27,12 @@ vector<int>    phohasPixelSeed_;
 vector<int>    phoEleVeto_;
 vector<float>  phoR9_;
 vector<float>  phoHoverE_;
-vector<float>  phoConeHoverE_;
 vector<float>  phoESEffSigmaRR_;
 vector<float>  phoSigmaIEtaIEtaFull5x5_;
 vector<float>  phoSigmaIEtaIPhiFull5x5_;
 vector<float>  phoSigmaIPhiIPhiFull5x5_;
-vector<float>  phoE1x3Full5x5_;
 vector<float>  phoE2x2Full5x5_;
-vector<float>  phoE2x5Full5x5_;
-vector<float>  phoE3x3Full5x5_;
 vector<float>  phoE5x5Full5x5_;
-vector<float>  phoEmax_;
-vector<float>  phoE2nd_;
-vector<float>  phoEtop_;
-vector<float>  phoEleft_;
-vector<float>  phoEright_;
-vector<float>  phoEbottom_;
 vector<float>  phoR9Full5x5_;
 vector<float>  phoPFChIso_;
 vector<float>  phoPFChPVIso_;
@@ -116,22 +106,12 @@ void ggNtuplizer::branchesPhotons(TTree* tree) {
   tree->Branch("phoEleVeto",                &phoEleVeto_);
   tree->Branch("phoR9",                     &phoR9_);
   tree->Branch("phoHoverE",                 &phoHoverE_);
-  tree->Branch("phoConeHoverE",             &phoConeHoverE_);
   tree->Branch("phoESEffSigmaRR",           &phoESEffSigmaRR_);
   tree->Branch("phoSigmaIEtaIEtaFull5x5",   &phoSigmaIEtaIEtaFull5x5_);
   tree->Branch("phoSigmaIEtaIPhiFull5x5",   &phoSigmaIEtaIPhiFull5x5_);
   tree->Branch("phoSigmaIPhiIPhiFull5x5",   &phoSigmaIPhiIPhiFull5x5_);
-  tree->Branch("phoE1x3Full5x5",            &phoE1x3Full5x5_);
   tree->Branch("phoE2x2Full5x5",            &phoE2x2Full5x5_);
-  tree->Branch("phoE2x5Full5x5",            &phoE2x5Full5x5_);
-  tree->Branch("phoE3x3Full5x5",            &phoE3x3Full5x5_);
   tree->Branch("phoE5x5Full5x5",            &phoE5x5Full5x5_);
-  tree->Branch("phoEmax",                   &phoEmax_);
-  tree->Branch("phoE2nd",                   &phoE2nd_);
-  tree->Branch("phoEtop",                   &phoEtop_);
-  tree->Branch("phoEleft",                  &phoEleft_);
-  tree->Branch("phoEright",                 &phoEright_);
-  tree->Branch("phoEbottom",                &phoEbottom_);
   tree->Branch("phoR9Full5x5",              &phoR9Full5x5_);
   //tree->Branch("phoSeedBCE",              &phoSeedBCE_);
   //tree->Branch("phoSeedBCEta",            &phoSeedBCEta_);
@@ -197,22 +177,12 @@ void ggNtuplizer::fillPhotons(const edm::Event& e, const edm::EventSetup& es) {
   phoEleVeto_             .clear();
   phoR9_                  .clear();
   phoHoverE_              .clear();
-  phoConeHoverE_          .clear();
   phoESEffSigmaRR_        .clear();
   phoSigmaIEtaIEtaFull5x5_.clear();
   phoSigmaIEtaIPhiFull5x5_.clear();
   phoSigmaIPhiIPhiFull5x5_.clear();
-  phoE1x3Full5x5_         .clear();
   phoE2x2Full5x5_         .clear();
-  phoE2x5Full5x5_         .clear();
-  phoE3x3Full5x5_         .clear();
   phoE5x5Full5x5_         .clear();
-  phoEmax_                .clear();
-  phoE2nd_                .clear();
-  phoEtop_                .clear();
-  phoEleft_               .clear();
-  phoEright_              .clear();
-  phoEbottom_             .clear();
   phoR9Full5x5_           .clear();
   phoPFChIso_             .clear();
   phoPFChPVIso_           .clear();
@@ -293,14 +263,11 @@ void ggNtuplizer::fillPhotons(const edm::Event& e, const edm::EventSetup& es) {
     phoEleVeto_               .push_back((Int_t)iPho->passElectronVeto());
     phoR9_                    .push_back(iPho->r9());
     phoHoverE_                .push_back(iPho->hadTowOverEm());
-    phoConeHoverE_            .push_back(iPho->hadronicOverEm());
     phoESEffSigmaRR_          .push_back(lazyTool.eseffsirir(*((*iPho).superCluster())));
-    phoPFChIso_               .push_back(iPho->chargedHadronIso()); //charged hadron isolation with dxy,dz match to pv
-    phoPFChPVIso_             .push_back(iPho->chargedHadronPFPVIso()); //only considers particles assigned to the primary vertex (PV) by particle flow, corresponds to <10_6 chargedHadronIso
+    phoPFChIso_               .push_back(iPho->chargedHadronIso());
     phoPFPhoIso_              .push_back(iPho->photonIso());
     phoPFNeuIso_              .push_back(iPho->neutralHadronIso());
-    phoPFChWorstIso_          .push_back(iPho->chargedHadronWorstVtxIso()); //max charged hadron isolation when dxy/dz matching to given vtx
-    phoPFChWorstVetoIso_      .push_back(iPho->chargedHadronWorstVtxGeomVetoIso()); //as chargedHadronWorstVtxIso but an additional geometry based veto cone
+    phoPFChWorstIso_          .push_back(iPho->chargedHadronWorstVtxIso());
     phoTrkIsoHollowConeDR03_  .push_back(iPho->trkSumPtHollowConeDR03());
     phoEcalPFClusterIso_      .push_back(iPho->ecalPFClusterIso());
     phoHcalPFClusterIso_      .push_back(iPho->hcalPFClusterIso());
@@ -391,17 +358,8 @@ void ggNtuplizer::fillPhotons(const edm::Event& e, const edm::EventSetup& es) {
     phoSigmaIEtaIEtaFull5x5_ .push_back(iPho->full5x5_sigmaIetaIeta());
     phoSigmaIEtaIPhiFull5x5_ .push_back(iPho->full5x5_showerShapeVariables().sigmaIetaIphi);
     phoSigmaIPhiIPhiFull5x5_ .push_back(iPho->full5x5_showerShapeVariables().sigmaIphiIphi);
-    phoE1x3Full5x5_          .push_back(iPho->full5x5_showerShapeVariables().e1x3);
-    phoE2x2Full5x5_          .push_back(iPho->full5x5_showerShapeVariables().e2x2);
-    phoE2x5Full5x5_          .push_back(iPho->full5x5_e2x5());
-    phoE3x3Full5x5_          .push_back(iPho->full5x5_e3x3());
+    phoE2x2Full5x5_          .push_back(lazyToolnoZS.e2x2(*((*iPho).superCluster()->seed())));
     phoE5x5Full5x5_          .push_back(iPho->full5x5_e5x5());
-    phoEmax_                 .push_back(iPho->full5x5_maxEnergyXtal());
-    phoE2nd_                 .push_back(iPho->full5x5_showerShapeVariables().e2nd);
-    phoEtop_                 .push_back(iPho->full5x5_showerShapeVariables().eTop); 
-    phoEleft_                .push_back(iPho->full5x5_showerShapeVariables().eLeft); 
-    phoEright_               .push_back(iPho->full5x5_showerShapeVariables().eRight); 
-    phoEbottom_              .push_back(iPho->full5x5_showerShapeVariables().eBottom); 
     phoR9Full5x5_            .push_back(iPho->full5x5_r9());
     phoMIPTotEnergy_         .push_back(iPho->mipTotEnergy());
 
@@ -417,8 +375,6 @@ void ggNtuplizer::fillPhotons(const edm::Event& e, const edm::EventSetup& es) {
     */
     
     nPho_++;
-
-    tester|=matchSinglePhotonTriggerFilters(iPho->et(), iPho->eta(), iPho->phi());
   }
 
 }

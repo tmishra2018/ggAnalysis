@@ -18,7 +18,6 @@
 #include "DataFormats/BeamSpot/interface/BeamSpot.h"
 #include "DataFormats/CaloRecHit/interface/CaloCluster.h"
 #include "DataFormats/CaloRecHit/interface/CaloClusterFwd.h"
-#include "DataFormats/EgammaCandidates/interface/Conversion.h"
 #include "DataFormats/Common/interface/Handle.h"
 #include "DataFormats/Common/interface/TriggerResults.h"
 #include "DataFormats/HepMCCandidate/interface/GenParticle.h"
@@ -78,7 +77,6 @@ class ggNtuplizer : public edm::EDAnalyzer {
   void branchesMET        (TTree*);
   void branchesPhotons    (TTree*);
   void branchesOOTPhotons (TTree*);
-  void branchesConversions(TTree*);
   void branchesPFPhotons  (TTree*);
   void branchesElectrons  (TTree*);
   void branchesHFElectrons(TTree*);
@@ -93,7 +91,6 @@ class ggNtuplizer : public edm::EDAnalyzer {
   void fillMET        (const edm::Event&, const edm::EventSetup&);
   void fillPhotons    (const edm::Event&, const edm::EventSetup&);
   void fillOOTPhotons (const edm::Event&, const edm::EventSetup&);
-  void fillConversions(const edm::Event&, const edm::EventSetup&);
   void fillPFPhotons  (const edm::Event&, const edm::EventSetup&);
   void fillElectrons  (const edm::Event&, const edm::EventSetup&, math::XYZPoint&);
   void fillHFElectrons(const edm::Event&);
@@ -104,11 +101,7 @@ class ggNtuplizer : public edm::EDAnalyzer {
 
   void cleanupPhotons();
   void cleanupOOTPhotons();
-  void cleanupConversions();
   bool UpdatedJet_secvtx() const;
-  bool testing() const;
-  bool GettestingFROMps(const edm::ParameterSet& ps, const std::string& name); // this is temporal function. need to be removed in further version
-  int Year(const edm::Event&) const;
 
   bool development_;
   bool addFilterInfoMINIAOD_;  
@@ -124,7 +117,6 @@ class ggNtuplizer : public edm::EDAnalyzer {
   bool dumpSoftDrop_;
   bool dumpPDFSystWeight_;
   bool dumpHFElectrons_;
-  bool testing_;
   int  year_;
 
   vector<int> newparticles_;
@@ -147,7 +139,6 @@ class ggNtuplizer : public edm::EDAnalyzer {
   edm::EDGetTokenT<vector<PileupSummaryInfo> >      puCollection_;
   edm::EDGetTokenT<vector<reco::GenParticle> >      genParticlesCollection_;
   edm::EDGetTokenT<edm::View<pat::MET> >            pfMETlabel_;
-  edm::EDGetTokenT<edm::View<pat::MET> >            puppiMETlabel_;
   edm::EDGetTokenT<edm::View<pat::Electron> >       electronCollection_;
   edm::EDGetTokenT<edm::View<pat::Photon> >         photonCollection_;
   edm::EDGetTokenT<edm::View<pat::Photon> >         ootPhotonCollection_;
@@ -162,7 +153,6 @@ class ggNtuplizer : public edm::EDAnalyzer {
   edm::EDGetTokenT<reco::GsfElectronCollection>     gsfElectronlabel_;
   edm::EDGetTokenT<edm::View<reco::GsfTrack> >      gsfTracks_;
   edm::EDGetTokenT<reco::ConversionCollection>      conversionsCollection_;
-  edm::EDGetTokenT<reco::ConversionCollection>      conversionsCollectionSL_;
   edm::EDGetTokenT<reco::BeamSpot>                  beamSpot_;
   edm::EDGetTokenT<reco::PFCandidateCollection>     pfAllParticles_;
   edm::EDGetTokenT<vector<pat::PackedCandidate> >   pckPFCdsLabel_;
@@ -176,8 +166,6 @@ class ggNtuplizer : public edm::EDAnalyzer {
   edm::EDGetTokenT<edm::View<pat::Jet>>             nanoUpdatedUserJetsToken_;
   edm::ESHandle<CaloTopology>                       topology_;
 
-  edm::EDGetTokenT<edm::View<pat::Jet> >           nanoUpdatedUserJetsLabel_;
-
   // for MET filters
   edm::EDGetTokenT<bool> BadPFMuonFilterUpdateDz_;
 
@@ -185,10 +173,14 @@ class ggNtuplizer : public edm::EDAnalyzer {
   edm::EDGetToken gsfEle_;
 
   // L1 ECAL prefiring
-  edm::EDGetTokenT<double> prefweight_token_;
-  edm::EDGetTokenT<double> prefweightup_token_;
-  edm::EDGetTokenT<double> prefweightdown_token_;
+  edm::EDGetTokenT< double > prefweightECAL_token;
+  edm::EDGetTokenT< double > prefweightupECAL_token;
+  edm::EDGetTokenT< double > prefweightdownECAL_token;
 
+  edm::EDGetTokenT< double > prefweightMuon_token;
+  edm::EDGetTokenT< double > prefweightupMuon_token;
+  edm::EDGetTokenT< double > prefweightdownMuon_token;	
+  
   TTree   *tree_;
   TH1F    *hEvents_;
   TH1F    *hPU_;
@@ -209,9 +201,6 @@ class ggNtuplizer : public edm::EDAnalyzer {
   //boost::shared_ptr<FactorizedJetCorrector> jecAK8pSD_;
   //std::vector<std::string> jecAK8PayloadNames_;
   HLTPrescaleProvider hltPrescaleProvider_;
-
-
-  ULong64_t tester;
 };
 
 #endif
