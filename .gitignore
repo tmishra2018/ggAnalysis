@@ -1,0 +1,29 @@
+# Python
+*.pyc
+__pycache__/
+
+# CRAB / runtime files
+crab.log
+.requestcache
+*.tgz
+PSet.py
+PSet.pkl
+PSetDump.py
+debugFiles.tgz
+
+# AFS temp files
+.__afs*
+
+# ROOT generated
+EventTree.C
+EventTree.h
+
+*.root
+*.log
+__pycache__/
+crab.log
+*/crab_*/
+*.pyc
+crab.log
+.requestcache
+ggNtuplizer/test/CRAB_mc/

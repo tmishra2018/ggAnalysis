@@ -82,23 +82,23 @@ void ggNtuplizer::branchesJets(TTree* tree) {
   tree->Branch("jetEn",               &jetEn_);
   tree->Branch("jetEta",              &jetEta_);
   tree->Branch("jetPhi",              &jetPhi_);
-  tree->Branch("jetRawPt",            &jetRawPt_);
-  tree->Branch("jetRawEn",            &jetRawEn_);
+  //tree->Branch("jetRawPt",            &jetRawPt_);
+  //tree->Branch("jetRawEn",            &jetRawEn_);
   tree->Branch("jetMt",               &jetMt_);
   tree->Branch("jetArea",             &jetArea_);
-  tree->Branch("jetLeadTrackPt",      &jetLeadTrackPt_);
-  tree->Branch("jetLeadTrackEta",     &jetLeadTrackEta_);
-  tree->Branch("jetLeadTrackPhi",     &jetLeadTrackPhi_);
-  tree->Branch("jetLepTrackPID",      &jetLepTrackPID_);
-  tree->Branch("jetLepTrackPt",       &jetLepTrackPt_);
-  tree->Branch("jetLepTrackEta",      &jetLepTrackEta_);
-  tree->Branch("jetLepTrackPhi",      &jetLepTrackPhi_);
+  //tree->Branch("jetLeadTrackPt",      &jetLeadTrackPt_);
+  //tree->Branch("jetLeadTrackEta",     &jetLeadTrackEta_);
+  //tree->Branch("jetLeadTrackPhi",     &jetLeadTrackPhi_);
+  //tree->Branch("jetLepTrackPID",      &jetLepTrackPID_);
+  //tree->Branch("jetLepTrackPt",       &jetLepTrackPt_);
+  //tree->Branch("jetLepTrackEta",      &jetLepTrackEta_);
+  //tree->Branch("jetLepTrackPhi",      &jetLepTrackPhi_);
   tree->Branch("jetCSV2BJetTags",     &jetCSV2BJetTags_);
-  tree->Branch("jetDeepCSVTags_b",    &jetDeepCSVTags_b_);
-  tree->Branch("jetDeepCSVTags_bb",   &jetDeepCSVTags_bb_);
-  tree->Branch("jetDeepCSVTags_c",    &jetDeepCSVTags_c_);
-  tree->Branch("jetDeepCSVTags_udsg", &jetDeepCSVTags_udsg_);
-  if (doGenParticles_){
+  //tree->Branch("jetDeepCSVTags_b",    &jetDeepCSVTags_b_);
+  //tree->Branch("jetDeepCSVTags_bb",   &jetDeepCSVTags_bb_);
+  //tree->Branch("jetDeepCSVTags_c",    &jetDeepCSVTags_c_);
+  //tree->Branch("jetDeepCSVTags_udsg", &jetDeepCSVTags_udsg_);
+  /*if (doGenParticles_){
     tree->Branch("jetPartonID",       &jetPartonID_);
     tree->Branch("jetHadFlvr",        &jetHadFlvr_);
     tree->Branch("jetGenJetEn",       &jetGenJetEn_);
@@ -114,20 +114,20 @@ void ggNtuplizer::branchesJets(TTree* tree) {
     tree->Branch("jetP4Smear",        &jetP4Smear_);
     tree->Branch("jetP4SmearUp",      &jetP4SmearUp_);
     tree->Branch("jetP4SmearDo",      &jetP4SmearDo_);
-  }  
+  } */ 
   tree->Branch("jetPFLooseId", &jetPFLooseId_);
   tree->Branch("jetID",        &jetID_);
-  tree->Branch("jetPUID",      &jetPUID_);
-  tree->Branch("jetPUFullID",  &jetPUFullID_);
+  //tree->Branch("jetPUID",      &jetPUID_);
+  //tree->Branch("jetPUFullID",  &jetPUFullID_);
   tree->Branch("jetJECUnc",    &jetJECUnc_);
-  tree->Branch("jetFiredTrgs", &jetFiredTrgs_);
-  tree->Branch("jetCHF",       &jetCHF_);
-  tree->Branch("jetNHF",       &jetNHF_);
-  tree->Branch("jetCEF",       &jetCEF_);
-  tree->Branch("jetNEF",       &jetNEF_);
-  tree->Branch("jetNCH",       &jetNCH_);
-  tree->Branch("jetNNP",       &jetNNP_);
-  tree->Branch("jetMUF",       &jetMUF_);
+  //tree->Branch("jetFiredTrgs", &jetFiredTrgs_);
+  //tree->Branch("jetCHF",       &jetCHF_);
+  //tree->Branch("jetNHF",       &jetNHF_);
+  //tree->Branch("jetCEF",       &jetCEF_);
+  //tree->Branch("jetNEF",       &jetNEF_);
+  //tree->Branch("jetNCH",       &jetNCH_);
+  //tree->Branch("jetNNP",       &jetNNP_);
+  //tree->Branch("jetMUF",       &jetMUF_);
   if ( UpdatedJet_secvtx() ) {
       tree->Branch("jetSecVtxPt"   ,  &jetSecVtxPt_   );
       tree->Branch("jetSecVtxMass" ,  &jetSecVtxMass_ );

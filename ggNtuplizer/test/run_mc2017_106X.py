@@ -13,13 +13,13 @@ from Configuration.AlCa.GlobalTag_condDBv2 import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, '106X_mc2017_realistic_v9')
 
 #process.Tracer = cms.Service("Tracer")
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(5000) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
 process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 
 process.source = cms.Source("PoolSource",
                             fileNames = cms.untracked.vstring(
                                 #'/store/mc/RunIISummer20UL17MiniAODv2/SMS-TChiWG_TuneCP5_13TeV-madgraphMLM-pythia8/MINIAODSIM/FSUL17_106X_mc2017_realistic_v9-v2/2810000/580CA754-9970-1843-A4D7-4505FF57F71A.root'
-                                '/store/mc/RunIISummer20UL17MiniAODv2/SMS-T5Wg_TuneCP5_13TeV-madgraphMLM-pythia8/MINIAODSIM/FSUL17_106X_mc2017_realistic_v9-v2/2530000/00F6560E-4AA0-F14B-839B-4F4DCF539E49.root'
+                                '/store/mc/RunIISummer20UL17MiniAODv2/WGToLNuG_01J_5f_TuneCP5_13TeV-amcatnloFXFX-pythia8/MINIAODSIM/106X_mc2017_realistic_v9-v1/00000/B1EA88CF-EF15-334C-A822-84EC235E96F4.root'
                             ))
 
 #process.load("PhysicsTools.PatAlgos.patSequences_cff")

@@ -9,17 +9,10 @@ float            pthat_;
 float            processID_;
 float            genWeight_;
 float            genHT_;
-float            genPho1_;
-float            genPho2_;
 TString          EventTag_;
 float            pdfWeight_;     
 vector<float>    pdfSystWeight_;
-Int_t            nLHE_;
-vector<int>      lhePID;
-vector<float>    lhePx;
-vector<float>    lhePy;
-vector<float>    lhePz; 
-vector<float>    lheE;
+vector<float> 	 genScaleSystWeights_;
 
 Int_t            nPUInfo_;
 vector<int>      nPU_;
@@ -116,43 +109,35 @@ float getGenTrkIso(edm::Handle<reco::GenParticleCollection> handle,
 
 void ggNtuplizer::branchesGenInfo(TTree* tree, edm::Service<TFileService> &fs) {
 
-  tree->Branch("pdf",           &pdf_);
-  tree->Branch("pthat",         &pthat_);
-  tree->Branch("processID",     &processID_);
+  //tree->Branch("pdf",           &pdf_);
+  //tree->Branch("pthat",         &pthat_);
+  //tree->Branch("processID",     &processID_);
   tree->Branch("genWeight",     &genWeight_);
-  tree->Branch("genHT",         &genHT_);
-  tree->Branch("genPho1",       &genPho1_);
-  tree->Branch("genPho2",       &genPho2_);
+  //tree->Branch("genHT",         &genHT_);
   if (dumpPDFSystWeight_) {
     tree->Branch("pdfWeight",     &pdfWeight_);
     tree->Branch("pdfSystWeight", &pdfSystWeight_);
+		tree->Branch("genScaleSystWeights", &genScaleSystWeights_);
   }
   tree->Branch("EventTag",      &EventTag_);
 
-  tree->Branch("nPUInfo",       &nPUInfo_);
+  //tree->Branch("nPUInfo",       &nPUInfo_);
   tree->Branch("nPU",           &nPU_);
   tree->Branch("puBX",          &puBX_);
   tree->Branch("puTrue",        &puTrue_);
-  tree->Branch("nLHE",          &nLHE_);
-  tree->Branch("lhePID",        &lhePID);
-  tree->Branch("lhePx",         &lhePx);
-  tree->Branch("lhePy",         &lhePy); 
-  tree->Branch("lhePz",         &lhePz); 
-  tree->Branch("lheE",          &lheE); 
 
   hPU_        = fs->make<TH1F>("hPU",        "number of pileup",      200,  0, 200);
   hPUTrue_    = fs->make<TH1F>("hPUTrue",    "number of true pilepu", 1000, 0, 200);
   hGenWeight_ = fs->make<TH1F>("hGenWeight", "Gen weights",           2,    0, 2);
-  hSumGenWeight_ = fs->make<TH1F>("hSumGenWeight", "Sum of Gen weights",1,  0, 1);
 }
 
 void ggNtuplizer::branchesGenPart(TTree* tree) {
 
   tree->Branch("nMC",          &nMC_);
   tree->Branch("mcPID",        &mcPID);
-  tree->Branch("mcVtx",        &mcVtx);
-  tree->Branch("mcVty",        &mcVty);
-  tree->Branch("mcVtz",        &mcVtz);
+  //tree->Branch("mcVtx",        &mcVtx);
+  //tree->Branch("mcVty",        &mcVty);
+  //tree->Branch("mcVtz",        &mcVtz);
   tree->Branch("mcPt",         &mcPt);
   tree->Branch("mcMass",       &mcMass);
   tree->Branch("mcEta",        &mcEta);
@@ -167,12 +152,12 @@ void ggNtuplizer::branchesGenPart(TTree* tree) {
   tree->Branch("mcMomPhi",     &mcMomPhi);
   //tree->Branch("mcIndex",      &mcIndex);
   tree->Branch("mcStatusFlag", &mcStatusFlag); //-999:non W or Z, 1:hardronic, 2:e, 3:mu, 4:tau
-  tree->Branch("mcParentage",  &mcParentage);  // 16*lepton + 8*boson + 4*non-prompt + 2*qcd + exotics
+  //tree->Branch("mcParentage",  &mcParentage);  // 16*lepton + 8*boson + 4*non-prompt + 2*qcd + exotics
   tree->Branch("mcStatus",     &mcStatus);     // status of the particle
-  tree->Branch("mcCalIsoDR03", &mcCalIsoDR03);
-  tree->Branch("mcTrkIsoDR03", &mcTrkIsoDR03);
-  tree->Branch("mcCalIsoDR04", &mcCalIsoDR04);
-  tree->Branch("mcTrkIsoDR04", &mcTrkIsoDR04);
+  //tree->Branch("mcCalIsoDR03", &mcCalIsoDR03);
+  //tree->Branch("mcTrkIsoDR03", &mcTrkIsoDR03);
+  //tree->Branch("mcCalIsoDR04", &mcCalIsoDR04);
+  //tree->Branch("mcTrkIsoDR04", &mcTrkIsoDR04);
 }
 
 void ggNtuplizer::fillGenInfo(const edm::Event& e) {
@@ -182,26 +167,20 @@ void ggNtuplizer::fillGenInfo(const edm::Event& e) {
   processID_ = -99;
   genWeight_ = -99;
   genHT_     = -99;
-  genPho1_   = -99;
-  genPho2_   = -99;
   nPUInfo_   = 0;
   pdfWeight_ = -99;
   EventTag_  = "";
   pdf_          .clear();
   pdfSystWeight_.clear();
+	genScaleSystWeights_.clear();
   nPU_          .clear();
   puBX_         .clear();
   puTrue_       .clear();
-  lhePID        .clear();
-  lhePx         .clear();
-  lhePy         .clear();
-  lhePz         .clear();
-  lheE          .clear();
 
   edm::Handle<GenEventInfoProduct> genEventInfoHandle;
   e.getByToken(generatorLabel_, genEventInfoHandle);
-  EventTag_ = modelTag_;
 
+  EventTag_ = modelTag_; 
   if (genEventInfoHandle.isValid()) {
 
     if (genEventInfoHandle->pdf()) {
@@ -220,48 +199,36 @@ void ggNtuplizer::fillGenInfo(const edm::Event& e) {
     genWeight_ = genEventInfoHandle->weight();
     if (genWeight_ >= 0) hGenWeight_->Fill(0.5);    
     else hGenWeight_->Fill(1.5);
-    if (abs(genWeight_)>1) hSumGenWeight_->Fill(0.5,genWeight_/abs(genWeight_));
-    else hSumGenWeight_->Fill(0.5,genWeight_);
   } else
     edm::LogWarning("ggNtuplizer") << "no GenEventInfoProduct in event";
   
   // access generator level HT  
   edm::Handle<LHEEventProduct> lheEventProduct;
   e.getByToken(lheEventLabel_, lheEventProduct);
-  
-  nLHE_ = 0;  
-  double lheHt   = 0.;
-  double lhePho1 = 0.;
-  double lhePho2 = 0.;
+ 
+	bool found_weight(false);
+  double lheHt = 0.;
   if (lheEventProduct.isValid()){
+		if(!lheEventProduct->weights().empty())found_weight = true;
+		genScaleSystWeights_.push_back(lheEventProduct->weights()[0].wgt/lheEventProduct->originalXWGTUP()); //id="1001" muR=1 muF=1 
+		genScaleSystWeights_.push_back(lheEventProduct->weights()[1].wgt/lheEventProduct->originalXWGTUP());	//id="1002" muR=1 muF=2 
+		genScaleSystWeights_.push_back(lheEventProduct->weights()[2].wgt/lheEventProduct->originalXWGTUP());	//id="1003" muR=1 muF=0.5 
+		genScaleSystWeights_.push_back(lheEventProduct->weights()[3].wgt/lheEventProduct->originalXWGTUP());	//id="1004" muR=2 muF=1 
+		genScaleSystWeights_.push_back(lheEventProduct->weights()[4].wgt/lheEventProduct->originalXWGTUP());	//id="1005" muR=2 muF=2 
+		genScaleSystWeights_.push_back(lheEventProduct->weights()[5].wgt/lheEventProduct->originalXWGTUP());	//id="1006" muR=2 muF=0.5 
+		genScaleSystWeights_.push_back(lheEventProduct->weights()[6].wgt/lheEventProduct->originalXWGTUP());	//id="1007" muR=0.5 muF=1 
+		genScaleSystWeights_.push_back(lheEventProduct->weights()[7].wgt/lheEventProduct->originalXWGTUP());	//id="1008" muR=0.5 muF=2 
+		genScaleSystWeights_.push_back(lheEventProduct->weights()[8].wgt/lheEventProduct->originalXWGTUP());	//id="1009" muR=0.5 muF=0.5 
+
     const lhef::HEPEUP& lheEvent = lheEventProduct->hepeup();
     std::vector<lhef::HEPEUP::FiveVector> lheParticles = lheEvent.PUP;
     size_t numParticles = lheParticles.size();
-    int nMCPho = 0;
     for ( size_t idxParticle = 0; idxParticle < numParticles; ++idxParticle ) {
       int absPdgId = TMath::Abs(lheEvent.IDUP[idxParticle]);
       int status = lheEvent.ISTUP[idxParticle];
-
-      if (status == 1) {
-	lhePID.push_back(lheEvent.IDUP[idxParticle]);
-	lhePx .push_back(lheParticles[idxParticle][0]);
-	lhePy .push_back(lheParticles[idxParticle][1]);
-	lhePz .push_back(lheParticles[idxParticle][2]);
-	lheE  .push_back(lheParticles[idxParticle][3]);
-	nLHE_++;
-      } 
-
-      if (status == 1 && ((absPdgId >= 1 && absPdgId <= 6) || absPdgId == 21) ) { // quarks and gluons
+      if ( status == 1 && ((absPdgId >= 1 && absPdgId <= 6) || absPdgId == 21) ) { // quarks and gluons
 	lheHt += TMath::Sqrt(TMath::Power(lheParticles[idxParticle][0], 2.) + TMath::Power(lheParticles[idxParticle][1], 2.)); // first entry is px, second py
       } 
-      if (status == 1 && absPdgId == 22 && nMCPho == 0) { // first photon
-	lhePho1 = TMath::Sqrt(TMath::Power(lheParticles[idxParticle][0], 2.) + TMath::Power(lheParticles[idxParticle][1], 2.));
-	nMCPho++;
-      }
-      if (status == 1 && absPdgId == 22 && nMCPho == 1) { // first photon
-	lhePho2 = TMath::Sqrt(TMath::Power(lheParticles[idxParticle][0], 2.) + TMath::Power(lheParticles[idxParticle][1], 2.));
-	nMCPho++;
-      }
 
       typedef std::vector<std::string>::const_iterator comments_const_iterator;
 
@@ -275,7 +242,7 @@ void ggNtuplizer::fillGenInfo(const edm::Event& e) {
 	  model_params = *cit;
 	}
       }
-      EventTag_ = model_params;
+//      EventTag_ = model_params;
     }
 
     if (dumpPDFSystWeight_) {
@@ -285,10 +252,20 @@ void ggNtuplizer::fillGenInfo(const edm::Event& e) {
       }
     }
   }
-  genHT_   = lheHt;  
-  genPho1_ = lhePho1;  
-  genPho2_ = lhePho2;  
+  genHT_=lheHt;  
 
+	if(!found_weight){ 
+	const std::vector<double>& genweights = genEventInfoHandle->weights();
+    // these numbers are hard-coded by the GenEventInfo (shifted by 1 wrt LHE)
+    //renormalization/factorization scale weights
+    for (unsigned int i = 1; i < 10; i++){
+			genScaleSystWeights_.push_back(genweights[i]/genweights[1]);
+    }
+		for (unsigned int i = 10; i < 111; i++){
+			pdfSystWeight_.push_back(genweights[i]/genweights[10]);
+		}
+	}
+ 
   edm::Handle<vector<PileupSummaryInfo> > genPileupHandle;
   e.getByToken(puCollection_, genPileupHandle);
   
@@ -313,6 +290,9 @@ void ggNtuplizer::fillGenInfo(const edm::Event& e) {
 
 void ggNtuplizer::fillGenPart(const edm::Event& e) {
 
+  // Fills tree branches with generated particle info.
+
+  // cleanup from previous execution
   mcPID       .clear();
   mcVtx       .clear();
   mcVty       .clear();
@@ -356,32 +336,36 @@ void ggNtuplizer::fillGenPart(const edm::Event& e) {
     int status = ip->status();
     //bool stableFinalStateParticle = status == 1 && ip->pt() > 5.0;
     
-    //bool quarks = abs(ip->pdgId())<7;
+    bool quarks = abs(ip->pdgId())<7;
 
     // keep non-FSR photons with pT > 5.0 and all leptons with pT > 3.0;
-    bool photonOrLepton =
-      (ip->pdgId() == 22 && (ip->isPromptFinalState() || ip->isLastCopy())) ||
-      (status == 1 && abs(ip->pdgId()) == 11 && (ip->isPromptFinalState() || ip->isLastCopy())) || 
-      (status == 1 && abs(ip->pdgId()) == 13 && (ip->isPromptFinalState() || ip->isLastCopy())) ||
-      (status == 1 && (abs(ip->pdgId()) == 12 || abs(ip->pdgId()) == 14 || abs(ip->pdgId()) == 16)) ||
-      (status == 1 && ( abs(ip->pdgId()) >= 11 && abs(ip->pdgId()) <= 16 ) && ip->pt() > 3.0)  ||
-      (status < 10 && abs(ip->pdgId()) == 15 && ip->pt() > 3.0);
+   // bool photonOrLepton =
+   //   (ip->pdgId() == 22 && (ip->isPromptFinalState() || ip->isLastCopy())) ||
+   //   (status == 1 && abs(ip->pdgId()) == 11 && (ip->isPromptFinalState() || ip->isLastCopy())) || 
+   //   (status == 1 && abs(ip->pdgId()) == 13 && (ip->isPromptFinalState() || ip->isLastCopy())) ||
+   //   (status == 1 && (abs(ip->pdgId()) == 12 || abs(ip->pdgId()) == 14 || abs(ip->pdgId()) == 16)) ||
+   //   (status == 1 && ( abs(ip->pdgId()) >= 11 && abs(ip->pdgId()) <= 16 ) && ip->pt() > 3.0)  ||
+   //   (status < 10 && abs(ip->pdgId()) == 15 && ip->pt() > 3.0);
       
+    bool photonOrLepton =
+      ( (ip->pdgId() == 22 || abs(ip->pdgId()) == 11 || abs(ip->pdgId()) == 13 || abs(ip->pdgId()) == 15 || 
+         abs(ip->pdgId()) == 12 || abs(ip->pdgId()) == 14 || abs(ip->pdgId()) == 16) &&
+         ip->pt() > 5.0);
     // select also Z, W, H, top and b 
-    bool heavyParticle =
-      ((    ip->pdgId()  == 23 && ip->isLastCopy()) || 
-       (abs(ip->pdgId()) == 24 && ip->isLastCopy()) || 
-       (    ip->pdgId()  == 25 && ip->isLastCopy()) ||
-       (abs(ip->pdgId()) ==  6 && ip->isLastCopy()) || 
-       (abs(ip->pdgId()) ==  5 && ip->isLastCopy()));
+   // bool heavyParticle =
+   //   ((    ip->pdgId()  == 23 && ip->isHardProcess()) || 
+   //    (abs(ip->pdgId()) == 24 && ip->isHardProcess()) || 
+   //    (    ip->pdgId()  == 25 && ip->isHardProcess()) ||
+   //    (abs(ip->pdgId()) ==  6 && ip->isHardProcess()) || 
+   //    (abs(ip->pdgId()) ==  5 && ip->isHardProcess()));
+    bool heavyParticle = true;
     
     bool newParticle = false;
     for (size_t inp = 0; inp < newparticles_.size(); ++inp) {
       if (abs(ip->pdgId()) == newparticles_[inp]) newParticle = true;
     }
     
-    //if ( heavyParticle || photonOrLepton || quarks || newParticle ) {
-    if ( heavyParticle || photonOrLepton || newParticle ) {
+    if ( heavyParticle || photonOrLepton || quarks || newParticle ) {
       
       const reco::Candidate *p = (const reco::Candidate*)&(*ip);
       if (!runOnParticleGun_ && !p->mother()) continue;
@@ -401,7 +385,7 @@ void ggNtuplizer::fillGenPart(const edm::Event& e) {
       UShort_t tmpStatusFlag = 0;
       if (ip->fromHardProcessFinalState()) setbit(tmpStatusFlag, 0);
       if (ip->isPromptFinalState())        setbit(tmpStatusFlag, 1);
-      if (ip->isHardProcess())             setbit(tmpStatusFlag, 2);
+      if (ip->isHardProcess())  setbit(tmpStatusFlag, 2);
 
       // if genParticle is W or Z, check its decay type
       if ( ip->pdgId() == 23 || abs(ip->pdgId()) == 24 ) {
@@ -413,7 +397,6 @@ void ggNtuplizer::fillGenPart(const edm::Event& e) {
           else if (abs(dp->pdgId())==15 || abs(dp->pdgId())==16) setbit(tmpStatusFlag, 7);
         }
       }
-      //if (ip->isLastCopy())  setbit(tmpStatusFlag, 8);
       mcStatusFlag.push_back(tmpStatusFlag);
 
       int mcGMomPID_ = -999;

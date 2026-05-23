@@ -13,12 +13,13 @@ from Configuration.AlCa.GlobalTag_condDBv2 import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, '106X_upgrade2018_realistic_v16_L1v1')
 
 #process.Tracer = cms.Service("Tracer")
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
 process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 
 process.source = cms.Source("PoolSource",
                             fileNames = cms.untracked.vstring(
-                                '/store/mc/RunIISummer20UL18MiniAODv2/SMS-TChiWG_TuneCP5_13TeV-madgraphMLM-pythia8/MINIAODSIM/FSUL18_106X_upgrade2018_realistic_v16_L1v1-v2/30000/E6D86B65-5A68-0945-9D2E-E516B9746715.root'
+				'/store/mc/RunIISummer20UL18MiniAODv2/SMS-T6Wg_TuneCP5_13TeV-madgraphMLM-pythia8/MINIAODSIM/FSMiniUL18_106X_upgrade2018_realistic_v16_L1v1-v2/2530000/00E8EC81-AFC8-3F41-8B2A-E34459FAF513.root'
+                                #'/store/mc/RunIISummer20UL18MiniAODv2/SMS-TChiWG_TuneCP5_13TeV-madgraphMLM-pythia8/MINIAODSIM/FSUL18_106X_upgrade2018_realistic_v16_L1v1-v2/30000/E6D86B65-5A68-0945-9D2E-E516B9746715.root'
                                 #'/store/mc/RunIISummer20UL18MiniAODv2/SMS-T5Wg_TuneCP5_13TeV-madgraphMLM-pythia8/MINIAODSIM/FSUL18_106X_upgrade2018_realistic_v16_L1v1-v2/30000/002B93F1-2995-B04D-96C4-C091EDE54431.root'
                             ))
 
@@ -84,8 +85,7 @@ process.RandomNumberGeneratorService = cms.Service("RandomNumberGeneratorService
 process.load("ggAnalysis.ggNtuplizer.ggNtuplizer_miniAOD_cfi")
 process.ggNtuplizer.year=cms.int32(2018)
 process.ggNtuplizer.doGenParticles=cms.bool(True)
-process.ggNtuplizer.runL1ECALPrefire=cms.bool(True)
-process.ggNtuplizer.dumpPFPhotons=cms.bool(True)
+process.ggNtuplizer.dumpPFPhotons=cms.bool(False)
 process.ggNtuplizer.dumpHFElectrons=cms.bool(False)
 process.ggNtuplizer.dumpJets=cms.bool(True)
 process.ggNtuplizer.dumpAK8Jets=cms.bool(False)

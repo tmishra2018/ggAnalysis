@@ -97,6 +97,6 @@ for year in yearsToRun:
         #lfnDirBase = "/store/group/phys_susy/Tribeni/{did}".format(did=datasetIdentifier)     
         lfnDirBase = "/store/user/trmishra/{did}".format(did=datasetIdentifier)     
         crabReqName = "ntuplizer_10620_mc_{did}".format(did=datasetIdentifier)
-        commandToSubmit += "-c MC_crabConfig.py General.requestName=crabReqName General.workArea=CRAB_mc/{did} JobType.psetName={p} Data.inputDataset={d} Data.outLFNDirBase={lDB}".format(did=datasetIdentifier, d=dataset, p=psetFiles[year], lDB=lfnDirBase)
+        commandToSubmit += "-c MC_crabConfig.py General.requestName=crabReqName General.workArea=CRAB_mc/{did}_postVFP JobType.psetName={p} Data.inputDataset={d} Data.outLFNDirBase={lDB}".format(did=datasetIdentifier, d=dataset, p=psetFiles[year], lDB=lfnDirBase)
         print(commandToSubmit)
         execute_in_crab_env(commandToSubmit)
